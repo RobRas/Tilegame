@@ -60,33 +60,13 @@ class Player extends Sprite
 			switch(dir)
 			{
 				case LEFT:
-					if (game.getTileType(gridX-1, gridY) == EMPTY) {
-						tweenTo(x-Game.GRID_SIZE, y, gridX, gridY);
-						gridX--;
-					} else if (game.getTileType(gridX-1, gridY) == WALL) {
-						Menu.reset();
-					}
+					moveDirection(-1, 0);
 				case RIGHT:
-					if (game.getTileType(gridX+1, gridY) == EMPTY) {
-						tweenTo(x+Game.GRID_SIZE, y, gridX, gridY);
-						gridX++;
-					} else if (game.getTileType(gridX+1, gridY) == WALL) {
-						Menu.reset();
-					}
+					moveDirection(1, 0);
 				case UP:
-					if (game.getTileType(gridX, gridY-1) == EMPTY) {
-						tweenTo(x,y-Game.GRID_SIZE, gridX, gridY);
-						gridY--;
-					} else if (game.getTileType(gridX, gridY-1) == WALL) {
-						Menu.reset();
-					}
+					moveDirection(0, -1);
 				case DOWN:
-					if (game.getTileType(gridX, gridY+1) == EMPTY) {
-						tweenTo(x,y+Game.GRID_SIZE, gridX, gridY);
-						gridY++;
-					} else if (game.getTileType(gridX, gridY+1) == WALL) {
-						Menu.reset();
-					}
+					moveDirection(0, 1);
 				default: return;
 			}
 		});
@@ -94,22 +74,30 @@ class Player extends Sprite
 		addChild(new TextField(Game.GRID_SIZE,Game.GRID_SIZE,"P",Menu.bitmapFont,20,0x0000ff));
 
 	}
-
-	private function tweenTo(nx : Float, ny : Float, oldGridX : UInt, oldGridY : UInt)
-	{
-		if(game.validPos(nx,ny))
-		{
-			moving = true;
-			Starling.juggler.tween(this, 0.1,
-			{
-				transition: Transitions.LINEAR,
-				x: nx, y : ny,
-				onComplete: function() {
-					moving = false;
-					game.createWall(oldGridX, oldGridY);
-				}
-			});
-		}
-		else Menu.reset();
+	
+	private function moveDirection(dirX : Int, dirY : Int) {
+		var nx = gridX + dirX;
+		var ny = gridY + dirY;
+		
+		if(game.validPos(nx, ny)) {
+			if (game.getTileType(nx, ny) == EMPTY) {
+				moving = true;
+				Starling.juggler.tween(this, 0.1,
+				{
+					transition: Transitions.LINEAR,
+					x: nx * Game.GRID_SIZE, y : ny * Game.GRID_SIZE,
+					onComplete: function() {
+						moving = false;
+						game.createWall(gridX, gridY);
+						gridX = nx;
+						gridY = ny;
+					}
+				});
+			} else if (game.getTileType(nx, ny) == WALL) {
+				Menu.reset();
+			}
+		} else {
+				Menu.reset();
+			}
 	}
 }

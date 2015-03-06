@@ -97,8 +97,8 @@ class Game extends Sprite
 	public function getSize() : UInt
 	{	return size;}
 
-	public function validPos(cx : Float, cy : Float) : Bool {
-		return cx >= 0 && cx <= size - GRID_SIZE &&
-				cy >= 0 && cy <= size - GRID_SIZE;
+	public function validPos(gridX : Int, gridY : Int) : Bool {
+		return gridX >= 0 && gridX <= grid.length - 1 &&
+				gridY >= 0 && gridY <= grid[0].length - 1;
 	}
 }
