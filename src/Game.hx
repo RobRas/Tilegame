@@ -81,12 +81,23 @@ class Game extends Sprite
 				y = -(size - Starling.current.stage.stageHeight);
 		});
 	}
-
+	
+	public function getTileType(gridX : UInt, gridY : UInt) {
+		return grid[gridX][gridY];
+	}
+	
+	public function createWall(gridX : UInt, gridY : UInt) {
+		grid[gridX][gridY] = WALL;
+		var q = new Quad(GRID_SIZE, GRID_SIZE);
+		q.x = gridX * GRID_SIZE;
+		q.y = gridY * GRID_SIZE;
+		addChild(q);
+	}
+	
 	public function getSize() : UInt
 	{	return size;}
 
-	public function validPos(cx : Float, cy : Float) : Bool
-	{
+	public function validPos(cx : Float, cy : Float) : Bool {
 		return cx >= 0 && cx <= size - GRID_SIZE &&
 				cy >= 0 && cy <= size - GRID_SIZE;
 	}

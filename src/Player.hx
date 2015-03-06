@@ -60,17 +60,25 @@ class Player extends Sprite
 			switch(dir)
 			{
 				case LEFT:
-					tweenTo(x-Game.GRID_SIZE, y);
-					gridX--;
+					if (game.getTileType(gridX-1, gridY) == EMPTY) {
+						tweenTo(x-Game.GRID_SIZE, y, gridX, gridY);
+						gridX--;
+					}
 				case RIGHT:
-					tweenTo(x+Game.GRID_SIZE, y);
-					gridX++;
+					if (game.getTileType(gridX+1, gridY) == EMPTY) {
+						tweenTo(x+Game.GRID_SIZE, y, gridX, gridY);
+						gridX++;
+					}
 				case UP:
-					tweenTo(x,y-Game.GRID_SIZE);
-					gridY--;
+					if (game.getTileType(gridX, gridY-1) == EMPTY) {
+						tweenTo(x,y-Game.GRID_SIZE, gridX, gridY);
+						gridY--;
+					}
 				case DOWN:
-					tweenTo(x,y+Game.GRID_SIZE);
-					gridY++;
+					if (game.getTileType(gridX, gridY+1) == EMPTY) {
+						tweenTo(x,y+Game.GRID_SIZE, gridX, gridY);
+						gridY++;
+					}
 				default: return;
 			}
 		});
@@ -79,7 +87,7 @@ class Player extends Sprite
 
 	}
 
-	private function tweenTo(nx : Float, ny : Float)
+	private function tweenTo(nx : Float, ny : Float, oldGridX : UInt, oldGridY : UInt)
 	{
 		if(game.validPos(nx,ny))
 		{
@@ -88,8 +96,10 @@ class Player extends Sprite
 			{
 				transition: Transitions.LINEAR,
 				x: nx, y : ny,
-				onComplete: function()
-				{	moving = false;}
+				onComplete: function() {
+					moving = false;
+					game.createWall(oldGridX, oldGridY);
+				}
 			});
 		}
 		else Menu.reset();
