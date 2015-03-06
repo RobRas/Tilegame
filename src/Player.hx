@@ -63,21 +63,29 @@ class Player extends Sprite
 					if (game.getTileType(gridX-1, gridY) == EMPTY) {
 						tweenTo(x-Game.GRID_SIZE, y, gridX, gridY);
 						gridX--;
+					} else if (game.getTileType(gridX-1, gridY) == WALL) {
+						Menu.reset();
 					}
 				case RIGHT:
 					if (game.getTileType(gridX+1, gridY) == EMPTY) {
 						tweenTo(x+Game.GRID_SIZE, y, gridX, gridY);
 						gridX++;
+					} else if (game.getTileType(gridX+1, gridY) == WALL) {
+						Menu.reset();
 					}
 				case UP:
 					if (game.getTileType(gridX, gridY-1) == EMPTY) {
 						tweenTo(x,y-Game.GRID_SIZE, gridX, gridY);
 						gridY--;
+					} else if (game.getTileType(gridX, gridY-1) == WALL) {
+						Menu.reset();
 					}
 				case DOWN:
 					if (game.getTileType(gridX, gridY+1) == EMPTY) {
 						tweenTo(x,y+Game.GRID_SIZE, gridX, gridY);
 						gridY++;
+					} else if (game.getTileType(gridX, gridY+1) == WALL) {
+						Menu.reset();
 					}
 				default: return;
 			}
