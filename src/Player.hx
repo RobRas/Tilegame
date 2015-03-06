@@ -22,19 +22,19 @@ class Player extends Sprite
 
 	private var dir : DIRECTION;
 	private var moving : Bool;
+	private var game : Game;
 
-	public function new(menu : Menu)
+	public function new(g : Game)
 	{
 		super();
 		dir = NONE;
 		moving = false;
+		game = g;
 
 		addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent)
 		{
 			switch(e.keyCode)
 			{
-				case Keyboard.ESCAPE:
-					menu.reset();
 				case Keyboard.UP:
 					dir = UP;
 				case Keyboard.DOWN:
@@ -68,13 +68,17 @@ class Player extends Sprite
 
 	private function tweenTo(nx : Float, ny : Float)
 	{
-		moving = true;
-		Starling.juggler.tween(this, 0.2,
+		if(game.validPos(nx,ny))
 		{
-			transition: Transitions.LINEAR,
-			x: nx, y : ny,
-			onComplete: function()
-			{	moving = false;}
-		});
+			moving = true;
+			Starling.juggler.tween(this, 0.1,
+			{
+				transition: Transitions.LINEAR,
+				x: nx, y : ny,
+				onComplete: function()
+				{	moving = false;}
+			});
+		}
+		else Menu.reset();
 	}
 }

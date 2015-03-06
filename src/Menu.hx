@@ -21,10 +21,14 @@ class Menu extends Sprite
 
 	private static inline var instructionText = "Add instructions later...";
 
+	//for resetting
+	private static inline var RESET_GAME = "ResetGame";
+
 	public function new()
 	{
 		super();
-		reset();
+		setMenu(Main);
+		Starling.current.stage.addEventListener(RESET_GAME, function(){setMenu(Main);});
 	}
 
 	private function setMenu(state : GAME_STATE)
@@ -73,15 +77,15 @@ class Menu extends Sprite
 				addChild(back);
 
 			case Play:
-				addChild(new Game(this));
+				addChild(new Game());
 		}
 	}
 
 	public static function setHeight(n : Float) : Float
 	{	return (n/100) * Starling.current.stage.stageHeight;}
 
-	public function reset()
-	{	setMenu(Main);}
+	public static function reset()
+	{	Starling.current.stage.dispatchEvent(new Event(RESET_GAME));}
 }
 
 class MenuText extends TextField
