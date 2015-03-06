@@ -2,7 +2,7 @@
 <application xmlns="http://ns.adobe.com/air/application/3.8">
 	<id>com.RobRas.TileGame</id>
 	<name>Tile Game</name>
-	<versionNumber>2015.02.02</versionNumber>
+	<versionNumber>15.02.02</versionNumber>
 	<filename>Tile Game</filename>
 	<initialWindow>
 		<content>tile.swf</content>
