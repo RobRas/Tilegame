@@ -23,13 +23,22 @@ class Player extends Sprite
 	private var dir : DIRECTION;
 	private var moving : Bool;
 	private var game : Game;
+	
+	public var gridX : UInt;
+	public var gridY : UInt;
 
-	public function new(g : Game)
+	public function new(g : Game, gridX : UInt, gridY : UInt)
 	{
 		super();
 		dir = NONE;
 		moving = false;
 		game = g;
+		
+		this.gridX = gridX;
+		this.gridY = gridY;
+		
+		x = gridX * Game.GRID_SIZE;
+		y = gridY * Game.GRID_SIZE;
 
 		addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent)
 		{
@@ -52,12 +61,16 @@ class Player extends Sprite
 			{
 				case LEFT:
 					tweenTo(x-Game.GRID_SIZE, y);
+					gridX--;
 				case RIGHT:
 					tweenTo(x+Game.GRID_SIZE, y);
+					gridX++;
 				case UP:
 					tweenTo(x,y-Game.GRID_SIZE);
+					gridY--;
 				case DOWN:
 					tweenTo(x,y+Game.GRID_SIZE);
+					gridY++;
 				default: return;
 			}
 		});
