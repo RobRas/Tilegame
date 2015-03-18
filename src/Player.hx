@@ -100,11 +100,11 @@ class Player extends Sprite implements GameSprite
 					game.updateScore(score);
 					moveTo(nx,ny);
 				default:
-					Menu.reset();
+					game.reset();
 			}
 		}
 		else
-		{	Menu.reset();}
+		{	game.reset();}
 	}
 
 	private function moveTo(nx : Int, ny : Int)

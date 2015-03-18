@@ -21,7 +21,7 @@ class Game extends Sprite
 	private var size : UInt;
 	private var scoreText : TextField;
 
-	public function new(gridNum : UInt = 40)
+	public function new(gridNum : UInt)
 	{
 		super();
 
@@ -40,7 +40,7 @@ class Game extends Sprite
 
 		sticks = new Array();
 		addGlowsticks();
-		addPlayer(10, 10);
+		addPlayer(cast(gridNum/2,UInt), cast(gridNum/2,UInt));
 	}
 
 	public function updateScore(sc : UInt)
@@ -67,37 +67,44 @@ class Game extends Sprite
 		}
 	}
 
-	private function addPlayer(gridX : UInt, gridY : UInt) {
+	private function addPlayer(gridX : UInt, gridY : UInt)
+	{
 		var p = new Player(this, gridX, gridY);
-		scoreText = new TextField(Game.GRID_SIZE*3,Game.GRID_SIZE,"0",
-									Menu.bitmapFont,20,0xffffff);
-		addChild(scoreText);
 		addChild(p);
 
+		scoreText = new TextField(Game.GRID_SIZE*3,Game.GRID_SIZE,"0",
+									Menu.bitmapFont,20,0xffffff);
+		scoreText.x = Starling.current.stage.stageWidth - scoreText.width;
+		scoreText.y = scoreText.height;
+
 		//check every frame to ensure the grid is positioned correctly
-		addEventListener(Event.ENTER_FRAME, function()
+		//only if the grid so big that it can't fit on screen
+		if(size/Game.GRID_SIZE > 20)
 		{
-			//center positions of player
-			var centerX = p.x + Game.GRID_SIZE/2;
-			var centerY = p.y + Game.GRID_SIZE/2;
+			addEventListener(Event.ENTER_FRAME, function()
+			{
+				//center positions of player
+				var centerX = p.x + Game.GRID_SIZE/2;
+				var centerY = p.y + Game.GRID_SIZE/2;
 
-			//new grid position
-			x = -(centerX - Starling.current.stage.stageWidth/2);
-			y = -(centerY - Starling.current.stage.stageHeight/2);
+				//new grid position
+				x = -(centerX - Starling.current.stage.stageWidth/2);
+				y = -(centerY - Starling.current.stage.stageHeight/2);
 
-			//bound grid
-			if(x > 0) x = 0;
-			else if(x < -(size - Starling.current.stage.stageWidth))
-				x = -(size - Starling.current.stage.stageWidth);
+				//bound grid
+				if(x > 0) x = 0;
+				else if(x < -(size - Starling.current.stage.stageWidth))
+					x = -(size - Starling.current.stage.stageWidth);
 
-			if(y > 0) y = 0;
-			else if(y < -(size - Starling.current.stage.stageHeight))
-				y = -(size - Starling.current.stage.stageHeight);
-
-			scoreText.x = Starling.current.stage.stageWidth/2 - scoreText.width - x;
-			scoreText.y = scoreText.height - y;
-		});
+				if(y > 0) y = 0;
+				else if(y < -(size - Starling.current.stage.stageHeight))
+					y = -(size - Starling.current.stage.stageHeight);
+			});
+		}
 	}
+
+	public function addScore(ob:Sprite)
+	{	ob.addChild(scoreText);}
 
 	public function getTileType(gridX : UInt, gridY : UInt)
 	{	return grid[gridX][gridY];}
@@ -110,14 +117,15 @@ class Game extends Sprite
 
 	private function addGlowsticks()
 	{
-		while(sticks.length < Game.GRID_SIZE / 2)
+		var gridNum : Int = Std.int(size/Game.GRID_SIZE);
+		while(sticks.length < gridNum / 2)
 		{
-			var nx = Std.random(Game.GRID_SIZE);
-			var ny = Std.random(Game.GRID_SIZE);
+			var nx = Std.random(gridNum);
+			var ny = Std.random(gridNum);
 			while(getTileType(nx,ny) != EMPTY)
 			{
-				nx = Std.random(Game.GRID_SIZE);
-				ny = Std.random(Game.GRID_SIZE);
+				nx = Std.random(gridNum);
+				ny = Std.random(gridNum);
 			}
 			createGlowstick(nx,ny);
 		}
@@ -160,6 +168,9 @@ class Game extends Sprite
 		return gridX >= 0 && gridX <= grid.length - 1 &&
 				gridY >= 0 && gridY <= grid[0].length - 1;
 	}
+
+	public function reset()
+	{	cast(parent, Menu).reset();}
 }
 
 interface GameSprite

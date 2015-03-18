@@ -10,6 +10,7 @@ enum GAME_STATE
 	Instructions;
 	Credits;
 	Play;
+	Type;
 }
 
 class Menu extends Sprite
@@ -28,10 +29,10 @@ class Menu extends Sprite
 	{
 		super();
 		setMenu(Main);
-		Starling.current.stage.addEventListener(RESET_GAME, function(){setMenu(Main);});
+		addEventListener(RESET_GAME, function(){setMenu(Main);});
 	}
 
-	private function setMenu(state : GAME_STATE)
+	private function setMenu(state : GAME_STATE, ?sz : UInt)
 	{
 		removeChildren();
 		switch(state)
@@ -42,7 +43,7 @@ class Menu extends Sprite
 				addChild(title);
 
 				var play = new MenuButton(100,50,"Play",20,
-				function(){setMenu(Play);});
+				function(){setMenu(Type);});
 				play.y = setHeight(30);
 				addChild(play);
 
@@ -55,6 +56,45 @@ class Menu extends Sprite
 				function(){setMenu(Credits);});
 				credits.y = setHeight(60);
 				addChild(credits);
+
+			case Type:
+				var title = new MenuText(200,100,"Pick a stage size",20);
+				title.y = setHeight(15);
+				addChild(title);
+
+				var text = new MenuText(100,100,"Size: 5",20);
+				text.y = setHeight(30);
+				addChild(text);
+
+				var num = 5;
+
+				var f = function(b:Bool)
+				{
+					if(b)
+					{
+						num += 5;
+						if(num > 100) num = 100;
+					}
+					else
+					{
+						num -= 5;
+						if(num < 5) num = 5;
+					}
+					text.text = "Size: " + num;
+				};
+
+				var up = new MenuButton(75,50,">",50,
+				function(){ f(true);});
+				up.y = setHeight(45);
+				var down = new MenuButton(75,50,"<",50,
+				function(){ f(false);});
+				down.y = setHeight(60);
+				addChild(up); addChild(down);
+
+				var play = new MenuButton(100,100,"Start",20,
+				function(){ setMenu(Play,num);});
+				play.y = setHeight(85);
+				addChild(play);
 
 			case Instructions:
 				var instr = new MenuText(300,300,instructionText,20);
@@ -77,15 +117,19 @@ class Menu extends Sprite
 				addChild(back);
 
 			case Play:
-				addChild(new Game());
+				var game = new Game(sz);
+				game.x = Starling.current.stage.stageWidth/2 - game.width/2;
+				game.y = Starling.current.stage.stageHeight/2 - game.height/2;
+				addChild(game);
+				game.addScore(this);
 		}
 	}
 
 	public static function setHeight(n : Float) : Float
 	{	return (n/100) * Starling.current.stage.stageHeight;}
 
-	public static function reset()
-	{	Starling.current.stage.dispatchEvent(new Event(RESET_GAME));}
+	public function reset()
+	{	dispatchEvent(new Event(RESET_GAME));}
 }
 
 class MenuText extends TextField
