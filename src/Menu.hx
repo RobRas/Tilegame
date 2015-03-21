@@ -18,9 +18,9 @@ class Menu extends Sprite
 	//This is where the name of the bitmap font should be placed
 	public inline static var bitmapFont = "Arial";
 
-	private inline static var creditsText = "Temitope Alaga\nAdd others' name later...";
+	private inline static var creditsText = "Temitope Alaga\nCate Holcomb\nAdd others' name later...";
 
-	private static inline var instructionText = "Add instructions later...";
+	private static inline var instructionText = "The nefarious Rave Bandit wants to steal all the glowsticks from the rave. Navigate the dance floor with the arrow keys, and avoid the dancers, walls, and your light trail.";
 
 	//for resetting
 	private static inline var RESET_GAME = "ResetGame";
@@ -62,22 +62,22 @@ class Menu extends Sprite
 				title.y = setHeight(15);
 				addChild(title);
 
-				var text = new MenuText(100,100,"Size: 5",20);
+				var text = new MenuText(100,100,"Size: 10",20);
 				text.y = setHeight(30);
 				addChild(text);
 
-				var num = 5;
+				var num = 10;
 
 				var f = function(b:Bool)
 				{
 					if(b)
 					{
-						num += 5;
+						num += 10;
 						if(num > 100) num = 100;
 					}
 					else
 					{
-						num -= 5;
+						num -= 10;
 						if(num < 5) num = 5;
 					}
 					text.text = "Size: " + num;
