@@ -2,7 +2,10 @@ import starling.display.Sprite;
 import starling.utils.AssetManager;
 import starling.display.Image;
 import starling.core.Starling;
+import starling.text.BitmapFont;
+import starling.text.TextField;
 import starling.animation.Transitions;
+import starling.textures.TextureSmoothing;
 
 class Root extends Sprite {
 
@@ -14,6 +17,18 @@ class Root extends Sprite {
 
 	public function start(startup:Startup) {
 		assets = new AssetManager();
+
+		//bitmap fonts
+		assets.enqueue("assets/font1.fnt");
+		assets.enqueue("assets/font1_0.png");
+		var fonts = new BitmapFont(assets.getTexture("font1_0"), assets.getXml("font1"));
+		fonts.smoothing = TextureSmoothing.BILINEAR;
+		TextField.registerBitmapFont(fonts);
+		assets.enqueue("assets/font2.fnt");
+		assets.enqueue("assets/font2_0.png");
+		//TextField.registerBitmapFont(new BitmapFont(assets.getTexture("font2_0"), assets.getXml("font2")).smoothing="NONE");
+
+
 		assets.loadQueue(function onProgress(ratio:Float) {
 			if (ratio == 1)
 			{
