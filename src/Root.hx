@@ -19,10 +19,10 @@ class Root extends Sprite {
 		assets = new AssetManager();
 
 		//bitmap fonts
-		assets.enqueue("assets/font1.fnt");
-		assets.enqueue("assets/font1_0.png");
-		var fonts = new BitmapFont(assets.getTexture("font1_0"), assets.getXml("font1"));
-		fonts.smoothing = TextureSmoothing.BILINEAR;
+		assets.enqueue("assets/font3.fnt");
+		assets.enqueue("assets/font3.png");
+		var fonts = new BitmapFont(assets.getTexture("font3"), assets.getXml("font3"));
+		fonts.smoothing = TextureSmoothing.NONE;
 		TextField.registerBitmapFont(fonts);
 		assets.enqueue("assets/font2.fnt");
 		assets.enqueue("assets/font2_0.png");

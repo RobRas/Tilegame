@@ -16,7 +16,7 @@ enum GAME_STATE
 class Menu extends Sprite
 {
 	//This is where the name of the bitmap font should be placed
-	public inline static var bitmapFont = "FutureWorld";
+	public inline static var bitmapFont = "font3";
 
 
 
@@ -40,7 +40,7 @@ class Menu extends Sprite
 		switch(state)
 		{
 			case Main:
-				var title = new MenuText(200,50,"Rave Bandit",50);
+				var title = new MenuText(400,100,"Rave Bandit",32);
 				title.y = setHeight(15);
 				addChild(title);
 
