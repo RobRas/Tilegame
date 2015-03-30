@@ -9,9 +9,8 @@ player, obstacle(people), glowstick sprite images
 bitmap font
 gameover screen
 spritesheet
-music, sounds
+sounds
 
 low priority:
 shading
 moving people
-score bar
