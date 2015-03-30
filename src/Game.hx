@@ -19,7 +19,7 @@ class Game extends Sprite
 	private var grid : Array<Array<GRIDTYPE>>;
 	private var sticks : Array<Glowstick>;
 	private var size : UInt;
-	private var scoreText : TextField;
+	private var scoreText : ScoreText;
 
 	public function new(gridNum : UInt)
 	{
@@ -44,7 +44,7 @@ class Game extends Sprite
 	}
 
 	public function updateScore(sc : UInt)
-	{	scoreText.text = Std.string(sc);}
+	{	scoreText.setText(Std.string(sc));}
 
 	private function createGridLines()
 	{
@@ -52,7 +52,7 @@ class Game extends Sprite
 		var i : UInt = 0;
 		while(i <= size)
 		{
-			var quad = new Quad(size, 2.5, 0xffff00);
+			var quad = new Quad(size, 2.5, 0);
 			quad.y = i; i += GRID_SIZE;
 			addChild(quad);
 		}
@@ -61,7 +61,7 @@ class Game extends Sprite
 		var j : UInt = 0;
 		while(j <= size)
 		{
-			var quad = new Quad(2.5, size, 0xffff00);
+			var quad = new Quad(2.5, size, 0);
 			quad.x = j; j += GRID_SIZE;
 			addChild(quad);
 		}
@@ -72,8 +72,7 @@ class Game extends Sprite
 		var p = new Player(this, gridX, gridY);
 		addChild(p);
 
-		scoreText = new TextField(Game.GRID_SIZE*3,Game.GRID_SIZE,"0",
-									Menu.bitmapFont,20,0xffffff);
+		scoreText = new ScoreText();
 		scoreText.x = Starling.current.stage.stageWidth - scoreText.width;
 		scoreText.y = scoreText.height;
 
@@ -109,16 +108,16 @@ class Game extends Sprite
 	public function getTileType(gridX : UInt, gridY : UInt)
 	{	return grid[gridX][gridY];}
 
-	public function createWall(gridX : UInt, gridY : UInt)
+	public function createWall(gridX : UInt, gridY : UInt, col : UInt)
 	{
 		grid[gridX][gridY] = WALL;
-		addChild(new Wall(gridX, gridY));
+		addChild(new Wall(gridX, gridY, col));
 	}
 
 	private function addGlowsticks()
 	{
 		var gridNum : Int = Std.int(size/Game.GRID_SIZE);
-		while(sticks.length < gridNum / 2)
+		while(sticks.length < (gridNum * gridNum)/ 10)
 		{
 			var nx = Std.random(gridNum);
 			var ny = Std.random(gridNum);
@@ -145,7 +144,7 @@ class Game extends Sprite
 		removeChild(wall);
 	}
 
-	public function removeGlowstick(nx : UInt, ny : UInt)
+	public function removeGlowstick(nx : UInt, ny : UInt) : UInt
 	{
 		grid[nx][ny] = EMPTY;
 		for(s in sticks)
@@ -155,9 +154,10 @@ class Game extends Sprite
 				sticks.remove(s);
 				removeChild(s);
 				addGlowsticks();
-				break;
+				return s.getColor();
 			}
 		}
+		return 0xffffff;
 	}
 
 	public function getSize() : UInt
@@ -181,13 +181,13 @@ interface GameSprite
 
 class Wall extends Sprite implements GameSprite
 {
-	public function new(gridX : UInt, gridY : UInt)
+	public function new(gridX : UInt, gridY : UInt, col : UInt)
 	{
 		super();
 		x = gridX * Game.GRID_SIZE;
 		y = gridY * Game.GRID_SIZE;
 
-		var q = new Quad(Game.GRID_SIZE, Game.GRID_SIZE);
+		var q = new Quad(Game.GRID_SIZE, Game.GRID_SIZE, col);
 		addChild(q);
 
 		addEventListener(Event.ADDED, function()
@@ -221,7 +221,7 @@ class Glowstick extends Sprite implements GameSprite
 
 		quad = new Quad(Game.GRID_SIZE / 4, Game.GRID_SIZE);
 		do{quad.color = Std.random(0xcccccc);}
-		while(quad.color < 0x444444);
+		while(quad.color < 0x606060);
 		addChild(quad);
 		quad.x = quad.y = Game.GRID_SIZE/2;
 		quad.pivotX = quad.width/2;
@@ -236,9 +236,31 @@ class Glowstick extends Sprite implements GameSprite
 		});
 	}
 
+	public function getColor() : UInt
+	{	return quad.color;}
+
 	public function getX() : UInt
 	{	return cast(Std.int(x / Game.GRID_SIZE), UInt);}
 
 		public function getY() : UInt
 	{	return cast(Std.int(y / Game.GRID_SIZE), UInt);}
+}
+
+class ScoreText extends Sprite
+{
+	private var quad : Quad;
+	private var score : TextField;
+
+	public function new()
+	{
+		super();
+		score = new TextField(Game.GRID_SIZE*3,Game.GRID_SIZE,"0",
+							Menu.bitmapFont,20,0xffffff);
+		quad = new Quad(score.width,score.height,0);
+		addChild(quad);
+		addChild(score);
+	}
+
+	public function setText(s:String)
+	{	score.text = s;}
 }

@@ -31,19 +31,22 @@ class Player extends Sprite implements GameSprite
 	private var score : UInt;
 	private var speed : Float;
 
+	public var wallColor : UInt;
+
 	public function new(g : Game, gridX : UInt, gridY : UInt)
 	{
 		super();
 		dir = NONE;
 		moving = false;
 		game = g;
+		wallColor = 0xffffff;
 
 		this.gridX = gridX;
 		this.gridY = gridY;
 
 		x = gridX * Game.GRID_SIZE;
 		y = gridY * Game.GRID_SIZE;
-		speed = 0.15;
+		speed = 0.2;
 		score = 0;
 
 		addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent)
@@ -93,11 +96,12 @@ class Player extends Sprite implements GameSprite
 				case EMPTY:
 					moveTo(nx,ny);
 				case SCORE:
-					game.removeGlowstick(nx,ny);
+					wallColor = game.removeGlowstick(nx,ny);
 					score += 10;
-					if(score % 30 == 0)
+					if(score % 100 == 0 && speed > 0.025)
 						speed -= 0.01;
 					game.updateScore(score);
+
 					moveTo(nx,ny);
 				default:
 					game.reset();
@@ -117,7 +121,7 @@ class Player extends Sprite implements GameSprite
 			onComplete: function()
 			{
 				moving = false;
-				game.createWall(gridX, gridY);
+				game.createWall(gridX, gridY, wallColor);
 				gridX = nx;
 				gridY = ny;
 			}

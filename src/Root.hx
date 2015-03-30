@@ -27,9 +27,16 @@ class Root extends Sprite {
 		assets.enqueue("assets/font2.fnt");
 		assets.enqueue("assets/font2_0.png");
 		//TextField.registerBitmapFont(new BitmapFont(assets.getTexture("font2_0"), assets.getXml("font2")).smoothing="NONE");
+		/*assets.enqueue("assets/font1.fnt", "assets/font1_0.png");
+		var fonts = new BitmapFont(assets.getTexture("font1_0"), assets.getXml("font1"));*/
 
 
-		assets.loadQueue(function onProgress(ratio:Float) {
+		assets.enqueue("assets/font2.fnt", "assets/font2_0.png");
+		var fonts = new BitmapFont(assets.getTexture("font2_0"), assets.getXml("font2"));
+
+		assets.enqueue("assets/TileGame.mp3");
+		assets.loadQueue(function onProgress(ratio:Float)
+		{
 			if (ratio == 1)
 			{
 				Starling.juggler.tween(startup.loadingBitmap, 1.0,
@@ -37,6 +44,8 @@ class Root extends Sprite {
 					transition:Transitions.EASE_OUT, delay:0, alpha: 0, onComplete:
 					function(){	startup.removeChild(startup.loadingBitmap);}
 				});
+				fonts.smoothing = "none";
+				TextField.registerBitmapFont(fonts,"FutureWorld");
 				addChild(new Menu());
 			}
 		});
