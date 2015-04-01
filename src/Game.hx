@@ -43,15 +43,18 @@ class Game extends Sprite
 			}
 		}
 
-		tilemap = new Tilemap(Root.assets, "tilemap");
+		if (gridNum == 70) tilemap = new Tilemap(Root.assets, "easy");
+		else if (gridNum == 50) tilemap = new Tilemap(Root.assets, "med");
+		else tilemap = new Tilemap(Root.assets, "hard");
 		tilemap.flatten();
-		Starling.current.stage.addChild(tilemap);
+		addChild(tilemap);
 
 		sticks = new Array();
 		addGlowsticks();
 		dancers = new Array();
 		addDancers();
 		addPlayer(cast(gridNum/2,UInt), cast(gridNum/2,UInt));
+		
 	}
 
 	public function updateScore(sc : UInt)
