@@ -25,8 +25,6 @@ class Root extends Sprite {
 		fonts.smoothing = TextureSmoothing.NONE;
 
 		//tilemap
-		assets.enqueue("assets/dancefloor.tmx");
-		assets.enqueue("assets/test.tmx");
 		assets.enqueue("assets/tile1.png");
 		assets.enqueue("assets/tile2.png");
 		assets.enqueue("assets/tile3.png");
