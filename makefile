@@ -1,10 +1,10 @@
-FLEX_SDK=~\Flex
+FLEX_SDK=C:/flexsdk
 
 APP=tile
 APP_XML=$(APP).xml
-ADL=$(FLEX_SDK)/bin/adl
+ADL=$(FLEX_SDK)/bin/adl.exe
 AMXMLC=$(FLEX_SDK)/bin/amxmlc
-SOURCES=src/Startup.hx src/Root.hx
+SOURCES=src/*.hx
 
 all: $(APP).swf
 $(APP).swf: $(SOURCES)

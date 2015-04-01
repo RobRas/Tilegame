@@ -126,7 +126,7 @@ class Game extends Sprite
 	private function addGlowsticks()
 	{
 		var gridNum : Int = Std.int(size/Game.GRID_SIZE);
-		while(sticks.length < (gridNum * gridNum)/ 20)
+		while(sticks.length < (gridNum * gridNum)/ 30)
 		{
 			var nx = Std.random(gridNum);
 			var ny = Std.random(gridNum);
