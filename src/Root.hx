@@ -18,6 +18,10 @@ class Root extends Sprite {
 	public function start(startup:Startup) {
 		assets = new AssetManager();
 
+		//spritesheet
+		assets.enqueue("assets/sprites.png");
+		assets.enqueue("assets/sprites.xml");
+
 		//bitmap fonts
 		assets.enqueue("assets/font3.fnt");
 		assets.enqueue("assets/font3.png");
@@ -77,6 +81,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/blue6.png");
 		assets.enqueue("assets/blue7.png");
 		assets.enqueue("assets/blue8.png");
+		
 
 		assets.enqueue("assets/TileGame.mp3");
 		assets.loadQueue(function onProgress(ratio:Float)
