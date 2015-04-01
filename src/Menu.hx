@@ -21,7 +21,7 @@ class Menu extends Sprite
 	//This is where the name of the bitmap font should be placed
 	public inline static var bitmapFont = "font3";
 
-	private inline static var creditsText = "Temitope Alaga\nCate Holcomb\nAdd others' name later...";
+	private inline static var creditsText = "Temitope Alaga\n Cate Holcomb\n Justin Liddicoat\nAdd others' name later...";
 
 	private static inline var instructionText = "The nefarious Rave Bandit wants to steal all the glowsticks from the rave. "
 	+"Navigate the dance floor with the arrow keys, and avoid the dancers, walls, and your light trail.";
@@ -64,38 +64,39 @@ class Menu extends Sprite
 				addChild(credits);
 
 			case Type:
-				var title = new MenuText(200,100,"Pick a stage size",20);
+				var title = new MenuText(200,100,"Pick a difficulty",20);
 				title.y = setHeight(15);
 				addChild(title);
 
-				var text = new MenuText(100,100,"Size: 10",20);
-				text.y = setHeight(30);
-				addChild(text);
-
-				var num = 10;
-
-				var f = function(b:Bool)
+				var num:UInt;
+				var difficultyFunc = function(i:UInt)
 				{
-					if(b)
-					{
-						num += 10;
-						if(num > 100) num = 100;
+					if(i == 0){
+						num = 70;
 					}
-					else
-					{
-						num -= 10;
-						if(num < 10) num = 10;
+					else if(i == 1){
+						num = 50;
 					}
-					text.text = "Size: " + num;
-				};
+					else{
+						num = 30;
+					}
+				}
 
-				var up = new MenuButton(75,50,">",32,
-				function(){ f(true);});
-				up.y = setHeight(45);
-				var down = new MenuButton(75,50,"<",32,
-				function(){ f(false);});
-				down.y = setHeight(60);
-				addChild(up); addChild(down);
+				var easy = new MenuButton(75,50,"Easy",32,
+				function(){ difficultyFunc(0);});
+				easy.y = setHeight(30);
+				
+				var medium = new MenuButton(75,50,"Medium",32,
+				function(){ difficultyFunc(1);});
+				medium.y = setHeight(40);
+				
+				var hard = new MenuButton(75,50,"Hard",32,
+				function(){ difficultyFunc(2);});
+				hard.y = setHeight(50);
+				
+				addChild(easy); 
+				addChild(medium);
+				addChild(hard);
 
 				var play = new MenuButton(100,100,"Start",20,
 				function(){ setMenu(Play,num);});
