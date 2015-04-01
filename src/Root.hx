@@ -23,16 +23,14 @@ class Root extends Sprite {
 		assets.enqueue("assets/font3.png");
 		var fonts = new BitmapFont(assets.getTexture("font3"), assets.getXml("font3"));
 		fonts.smoothing = TextureSmoothing.NONE;
-		TextField.registerBitmapFont(fonts);
-		assets.enqueue("assets/font2.fnt");
-		assets.enqueue("assets/font2_0.png");
-		//TextField.registerBitmapFont(new BitmapFont(assets.getTexture("font2_0"), assets.getXml("font2")).smoothing="NONE");
-		/*assets.enqueue("assets/font1.fnt", "assets/font1_0.png");
-		var fonts = new BitmapFont(assets.getTexture("font1_0"), assets.getXml("font1"));*/
-
-
-		assets.enqueue("assets/font2.fnt", "assets/font2_0.png");
-		var fonts = new BitmapFont(assets.getTexture("font2_0"), assets.getXml("font2"));
+		
+		//player sprites
+		assets.enqueue("assets/bandit1.png");
+		assets.enqueue("assets/bandit2.png");
+		assets.enqueue("assets/bandit3.png");
+		assets.enqueue("assets/bandit4.png");
+		assets.enqueue("assets/bandit5.png");
+		assets.enqueue("assets/bandit6.png");
 
 		assets.enqueue("assets/TileGame.mp3");
 		assets.loadQueue(function onProgress(ratio:Float)

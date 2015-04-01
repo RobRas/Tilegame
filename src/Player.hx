@@ -1,6 +1,6 @@
 import starling.core.Starling;
 import starling.display.Sprite;
-import starling.text.TextField;
+import starling.display.Image;
 import starling.animation.Transitions;
 import starling.events.*;
 import flash.ui.*;
@@ -18,11 +18,20 @@ enum DIRECTION
 
 class Player extends Sprite implements GameSprite
 {
-	//temporary image
-	private var image : TextField;
+	//the 8 player direcetion images
+	private var up:Image; 
+	private var down:Image; 
+	private var right:Image; 
+	private var left:Image; 
+	private var jup:Image; 
+	private var jdown:Image; 
+	private var jright:Image; 
+	private var jleft:Image;
+	private var currentImage : Image;
 
 	private var dir : DIRECTION;
 	private var moving : Bool;
+	private var jumping : Bool;
 	private var game : Game;
 
 	public var gridX : UInt;
@@ -38,6 +47,7 @@ class Player extends Sprite implements GameSprite
 		super();
 		dir = NONE;
 		moving = false;
+		jumping = false;
 		game = g;
 		wallColor = 0xffffff;
 
@@ -61,7 +71,19 @@ class Player extends Sprite implements GameSprite
 					if(dir != RIGHT) dir = LEFT;
 				case Keyboard.RIGHT:
 					if(dir != LEFT) dir = RIGHT;
+				case Keyboard.SPACE:
+					jumping = !jumping;
 			}
+			changeSprite();
+		});
+		addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent)
+		{
+			switch(e.keyCode)
+			{
+				case Keyboard.SPACE:
+					jumping = !jumping;
+			}
+			changeSprite();
 		});
 		addEventListener(Event.ENTER_FRAME, function()
 		{
@@ -80,8 +102,37 @@ class Player extends Sprite implements GameSprite
 			}
 		});
 
-		addChild(new TextField(Game.GRID_SIZE,Game.GRID_SIZE,
-							"P",Menu.bitmapFont,20,0x0000ff));
+		up = new Image(Root.assets.getTexture("bandit5"));
+		down = new Image(Root.assets.getTexture("bandit1"));
+		right = new Image(Root.assets.getTexture("bandit3"));
+		left = new Image(Root.assets.getTexture("bandit3"));
+		jup = new Image(Root.assets.getTexture("bandit6"));
+		jdown = new Image(Root.assets.getTexture("bandit2"));
+		jright = new Image(Root.assets.getTexture("bandit4"));
+		jleft = new Image(Root.assets.getTexture("bandit4"));
+
+		//format the player images for the begining of the game
+		up.visible = false;
+		right.visible = false;
+		left.visible = false;
+		left.scaleX = -1;
+		jup.visible = false;
+		jdown.visible = false;
+		jright.visible = false;
+		jleft.visible = false;
+		jleft.scaleX = -1;
+
+		addChild(up);
+		addChild(down);
+		addChild(right);
+		addChild(left);
+		addChild(jup);
+		addChild(jdown);
+		addChild(jright);
+		addChild(jleft);
+		currentImage = down;
+
+
 	}
 
 	private function checkDirection(dirX : Int, dirY : Int)
@@ -109,6 +160,33 @@ class Player extends Sprite implements GameSprite
 		}
 		else
 		{	game.reset();}
+	}
+
+	//changes the displayed image of the sprite depending on dir
+	private function changeSprite(){
+		var next: Image = currentImage;
+		switch(dir){
+			case UP:
+				if (jumping) next = jup;
+				else next = up;
+			case DOWN:
+				if (jumping) next = jdown;
+				else next = down;
+			case LEFT:
+				if (jumping) next = jleft;
+				else next = left;
+			case RIGHT:
+				if (jumping) next = jright;
+				else next = right;
+			case NONE:
+
+		}
+
+		if (next != currentImage){
+			currentImage.visible = false;
+			currentImage = next;
+			next.visible = true;
+			} 
 	}
 
 	private function moveTo(nx : Int, ny : Int)
