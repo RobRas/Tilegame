@@ -115,11 +115,13 @@ class Player extends Sprite implements GameSprite
 		right.visible = false;
 		left.visible = false;
 		left.scaleX = -1;
+		left.x = left.x + left.width;
 		jup.visible = false;
 		jdown.visible = false;
 		jright.visible = false;
 		jleft.visible = false;
 		jleft.scaleX = -1;
+		jleft.x = jleft.x + jleft.width;
 
 		addChild(up);
 		addChild(down);
