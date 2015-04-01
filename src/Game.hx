@@ -11,6 +11,7 @@ enum GRIDTYPE
 	PLAYER;
 	WALL;
 	SCORE;
+	DANCER;
 }
 
 class Game extends Sprite
@@ -18,9 +19,11 @@ class Game extends Sprite
 	public static inline var GRID_SIZE = 32;
 	private var grid : Array<Array<GRIDTYPE>>;
 	private var sticks : Array<Glowstick>;
+	private var dancers : Array<Dancer>;
 	private var size : UInt;
 	private var scoreText : ScoreText;
 	public var wallcount : UInt = 1;
+	private var tilemap : Tilemap;
 
 	public function new(gridNum : UInt)
 	{
@@ -39,8 +42,13 @@ class Game extends Sprite
 			}
 		}
 
+		//tilemap = new Tilemap(Root.assets, "dancefloor");
+		//addChild(tilemap);
+
 		sticks = new Array();
 		addGlowsticks();
+		dancers = new Array();
+		addDancers();
 		addPlayer(cast(gridNum/2,UInt), cast(gridNum/2,UInt));
 	}
 
@@ -139,6 +147,30 @@ class Game extends Sprite
 		addChild(stick);
 	}
 
+	private function addDancers(){
+		var gridNum : Int = Std.int(size/Game.GRID_SIZE);
+		while(dancers.length < gridNum )
+		{
+			var nx = Std.random(gridNum);
+			var ny = Std.random(gridNum);
+			while(getTileType(nx,ny) != EMPTY)
+			{
+				nx = Std.random(gridNum);
+				ny = Std.random(gridNum);
+			}
+			createDancer(nx,ny);
+		}
+	}
+
+	private function createDancer(gridX : UInt, gridY : UInt){
+		grid[gridX][gridY] = DANCER;
+		var d = new Dancer(Std.random(3));
+		d.x = gridX * Game.GRID_SIZE;
+		d.y = gridY * Game.GRID_SIZE;
+		dancers.push(d);
+		addChild(d);
+	}
+
 	public function removeWall(wall : Wall)
 	{
 		grid[wall.getX()][wall.getY()] = EMPTY;
@@ -193,7 +225,7 @@ class Wall extends Sprite implements GameSprite
 
 		addEventListener(Event.ADDED, function()
 		{
-			var timer = new Timer(100, Math.ceil(cast(parent, Game).wallcount++));
+			var timer = new Timer(100, Math.ceil(cast(parent, Game).wallcount++/2));
 			timer.start();
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, function(e:TimerEvent)
 			{

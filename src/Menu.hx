@@ -33,27 +33,7 @@ class Menu extends Sprite
 	{
 		super();
 		addChild(new GameMusic());
-		var red = new Image(Root.assets.getTexture("red1"));
-		red.scaleX = 2;
-		red.scaleY = 2;
-		red.smoothing = TextureSmoothing.NONE;
-		red.x = Starling.current.stage.stageWidth/2 - red.width/2;
-		red.y = setHeight(75);
-		addChild(red);
-		var blue = new Image(Root.assets.getTexture("blue1"));
-		blue.scaleX = 2;
-		blue.scaleY = 2;
-		blue.smoothing = TextureSmoothing.NONE;
-		blue.x = Starling.current.stage.stageWidth/4 - blue.width/2;
-		blue.y = setHeight(75);
-		addChild(blue);
-		var green = new Image(Root.assets.getTexture("green1"));
-		green.scaleX = 2;
-		green.scaleY = 2;
-		green.smoothing = TextureSmoothing.NONE;
-		green.x = 3*(Starling.current.stage.stageWidth/4) - green.width/2;
-		green.y = setHeight(75);
-		addChild(green);
+		setDancers();
 		setMenu(Main);
 		addEventListener(RESET_GAME, function(){setMenu(Main);});
 	}
@@ -156,6 +136,30 @@ class Menu extends Sprite
 
 	public function reset()
 	{	dispatchEvent(new Event(RESET_GAME));}
+
+	public function setDancers(){
+		var red = new Dancer(1);
+		red.scaleX = 2;
+		red.scaleY = 2;
+		red.smoothing = TextureSmoothing.NONE;
+		red.x = Starling.current.stage.stageWidth/2 - red.width/2;
+		red.y = setHeight(75);
+		addChild(red);
+		var blue = new Dancer(2);
+		blue.scaleX = 2;
+		blue.scaleY = 2;
+		blue.smoothing = TextureSmoothing.NONE;
+		blue.x = Starling.current.stage.stageWidth/4 - blue.width/2;
+		blue.y = setHeight(75);
+		addChild(blue);
+		var green = new Dancer(3);
+		green.scaleX = 2;
+		green.scaleY = 2;
+		green.smoothing = TextureSmoothing.NONE;
+		green.x = 3*(Starling.current.stage.stageWidth/4) - green.width/2;
+		green.y = setHeight(75);
+		addChild(green);
+	}
 }
 
 class MenuText extends TextField
@@ -269,6 +273,8 @@ class GameMusic extends Sprite
 		channel.soundTransform = new SoundTransform(volume);
 	}
 }
+
+
 
 class Background extends Sprite
 {

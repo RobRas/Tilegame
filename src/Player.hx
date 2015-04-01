@@ -151,7 +151,7 @@ class Player extends Sprite implements GameSprite
 					wallColor = game.removeGlowstick(nx,ny);
 					score += 10;
 					if(score % 100 == 0 && speed > 0.025)
-						speed -= 0.05;
+						speed -= 0.02;
 					game.updateScore(score);
 
 					moveTo(nx,ny);

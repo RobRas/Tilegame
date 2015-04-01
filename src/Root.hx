@@ -23,6 +23,25 @@ class Root extends Sprite {
 		assets.enqueue("assets/font3.png");
 		var fonts = new BitmapFont(assets.getTexture("font3"), assets.getXml("font3"));
 		fonts.smoothing = TextureSmoothing.NONE;
+
+
+		//assets.enqueue("assets/dancefloor.tmx");
+		assets.enqueue("assets/tile1.png");
+		assets.enqueue("assets/tile2.png");
+		assets.enqueue("assets/tile3.png");
+		assets.enqueue("assets/tile4.png");
+		assets.enqueue("assets/tile5.png");
+		assets.enqueue("assets/tile6.png");
+		assets.enqueue("assets/tile7.png");
+		assets.enqueue("assets/tile8.png");
+		assets.enqueue("assets/tile9.png");
+		assets.enqueue("assets/tile10.png");
+		assets.enqueue("assets/tile11.png");
+		assets.enqueue("assets/tile12.png");
+		assets.enqueue("assets/tile13.png");
+		assets.enqueue("assets/tile14.png");
+		assets.enqueue("assets/tile15.png");
+
 		
 		//player sprites
 		assets.enqueue("assets/bandit1.png");
@@ -39,6 +58,8 @@ class Root extends Sprite {
 		assets.enqueue("assets/red4.png");
 		assets.enqueue("assets/red5.png");
 		assets.enqueue("assets/red6.png");
+		assets.enqueue("assets/red7.png");
+		assets.enqueue("assets/red8.png");
 
 		assets.enqueue("assets/green1.png");
 		assets.enqueue("assets/green2.png");
@@ -46,6 +67,8 @@ class Root extends Sprite {
 		assets.enqueue("assets/green4.png");
 		assets.enqueue("assets/green5.png");
 		assets.enqueue("assets/green6.png");
+		assets.enqueue("assets/green7.png");
+		assets.enqueue("assets/green8.png");
 
 		assets.enqueue("assets/blue1.png");
 		assets.enqueue("assets/blue2.png");
@@ -53,6 +76,8 @@ class Root extends Sprite {
 		assets.enqueue("assets/blue4.png");
 		assets.enqueue("assets/blue5.png");
 		assets.enqueue("assets/blue6.png");
+		assets.enqueue("assets/blue7.png");
+		assets.enqueue("assets/blue8.png");
 
 		assets.enqueue("assets/TileGame.mp3");
 		assets.loadQueue(function onProgress(ratio:Float)
