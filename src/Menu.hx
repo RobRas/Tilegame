@@ -5,6 +5,7 @@ import starling.text.TextField;
 import starling.textures.Texture;
 import flash.media.*;
 import starling.animation.Transitions;
+import starling.textures.TextureSmoothing;
 
 enum GAME_STATE
 {
@@ -32,14 +33,34 @@ class Menu extends Sprite
 	{
 		super();
 		addChild(new GameMusic());
-		addChild(new Background());
+		var red = new Image(Root.assets.getTexture("red1"));
+		red.scaleX = 2;
+		red.scaleY = 2;
+		red.smoothing = TextureSmoothing.NONE;
+		red.x = Starling.current.stage.stageWidth/2 - red.width/2;
+		red.y = setHeight(75);
+		addChild(red);
+		var blue = new Image(Root.assets.getTexture("blue1"));
+		blue.scaleX = 2;
+		blue.scaleY = 2;
+		blue.smoothing = TextureSmoothing.NONE;
+		blue.x = Starling.current.stage.stageWidth/4 - blue.width/2;
+		blue.y = setHeight(75);
+		addChild(blue);
+		var green = new Image(Root.assets.getTexture("green1"));
+		green.scaleX = 2;
+		green.scaleY = 2;
+		green.smoothing = TextureSmoothing.NONE;
+		green.x = 3*(Starling.current.stage.stageWidth/4) - green.width/2;
+		green.y = setHeight(75);
+		addChild(green);
 		setMenu(Main);
 		addEventListener(RESET_GAME, function(){setMenu(Main);});
 	}
 
 	private function setMenu(state : GAME_STATE, ?sz : UInt)
 	{
-		removeChildren(2);
+		removeChildren(4);
 		switch(state)
 		{
 			case Main:
@@ -88,10 +109,10 @@ class Menu extends Sprite
 					text.text = "Size: " + num;
 				};
 
-				var up = new MenuButton(75,50,">",50,
+				var up = new MenuButton(75,50,">",32,
 				function(){ f(true);});
 				up.y = setHeight(45);
-				var down = new MenuButton(75,50,"<",50,
+				var down = new MenuButton(75,50,"<",32,
 				function(){ f(false);});
 				down.y = setHeight(60);
 				addChild(up); addChild(down);
@@ -143,7 +164,7 @@ class MenuText extends TextField
 	{
 		super(w,h,s,Menu.bitmapFont,f);
 
-		color = 0;
+		color = 0xffffff;
 		addEventListener(Event.ADDED, function()
 		{
 			x = Starling.current.stage.stageWidth/2 - w/2;
@@ -158,7 +179,7 @@ class MenuButton extends Button
 		super(Texture.empty(w,h), s);
 		fontName = Menu.bitmapFont;
 		fontSize = f;
-		fontColor = 0;
+		fontColor = 0xffffff;
 
 		addEventListener(Event.ADDED, function()
 		{
