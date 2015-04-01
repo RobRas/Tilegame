@@ -74,7 +74,6 @@ class Player extends Sprite implements GameSprite
 				case Keyboard.SPACE:
 					jumping = !jumping;
 			}
-			changeSprite();
 		});
 		addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent)
 		{
@@ -150,7 +149,7 @@ class Player extends Sprite implements GameSprite
 					wallColor = game.removeGlowstick(nx,ny);
 					score += 10;
 					if(score % 100 == 0 && speed > 0.025)
-						speed -= 0.01;
+						speed -= 0.05;
 					game.updateScore(score);
 
 					moveTo(nx,ny);
@@ -192,6 +191,7 @@ class Player extends Sprite implements GameSprite
 	private function moveTo(nx : Int, ny : Int)
 	{
 		moving = true;
+		changeSprite();
 		Starling.juggler.tween(this, speed,
 		{
 			transition: Transitions.LINEAR,

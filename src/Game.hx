@@ -20,6 +20,7 @@ class Game extends Sprite
 	private var sticks : Array<Glowstick>;
 	private var size : UInt;
 	private var scoreText : ScoreText;
+	public var wallcount : UInt = 1;
 
 	public function new(gridNum : UInt)
 	{
@@ -117,7 +118,7 @@ class Game extends Sprite
 	private function addGlowsticks()
 	{
 		var gridNum : Int = Std.int(size/Game.GRID_SIZE);
-		while(sticks.length < (gridNum * gridNum)/ 10)
+		while(sticks.length < (gridNum * gridNum)/ 20)
 		{
 			var nx = Std.random(gridNum);
 			var ny = Std.random(gridNum);
@@ -192,7 +193,7 @@ class Wall extends Sprite implements GameSprite
 
 		addEventListener(Event.ADDED, function()
 		{
-			var timer = new Timer(1000,2);
+			var timer = new Timer(100, Math.ceil(cast(parent, Game).wallcount++));
 			timer.start();
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, function(e:TimerEvent)
 			{
