@@ -15,7 +15,7 @@ $(APP).swf: $(SOURCES)
 	-swf-header 640:640:60:0 \
 	-main Startup \
 	-swf $(APP).swf \
-	-resource assets/dancefloor.tmx@dancefloor \
+	-resource assets/test.tmx@tilemap \
 	-swf-lib vendor/starling.swc --macro "patchTypes('vendor/starling.patch')"
 
 clean:

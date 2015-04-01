@@ -24,8 +24,9 @@ class Root extends Sprite {
 		var fonts = new BitmapFont(assets.getTexture("font3"), assets.getXml("font3"));
 		fonts.smoothing = TextureSmoothing.NONE;
 
-
-		//assets.enqueue("assets/dancefloor.tmx");
+		//tilemap
+		assets.enqueue("assets/dancefloor.tmx");
+		assets.enqueue("assets/test.tmx");
 		assets.enqueue("assets/tile1.png");
 		assets.enqueue("assets/tile2.png");
 		assets.enqueue("assets/tile3.png");
