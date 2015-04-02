@@ -213,22 +213,24 @@ class GameMusic extends Sprite
 		channel = null;
 		isPlaying = false;
 		volume = 0.5;
-
-		inc = new Button(Texture.empty(50,50),"+");
-		inc.x = 0;
+		
+		inc = new MenuButton(50, 50, "+", 20, incVol);
 		inc.y = Starling.current.stage.stageHeight - inc.height;
 		inc.fontName = Menu.bitmapFont;
 		inc.fontSize = 20;
 		inc.addEventListener(Event.TRIGGERED, incVol);
 
-		dec = new Button(Texture.empty(50,50),"-");
-		dec.x = dec.width;
+		dec = new MenuButton(50, 50, "-", 20, decVol);
 		dec.y = inc.y;
 		dec.fontName = Menu.bitmapFont;
 		dec.fontSize = 20;
 		dec.addEventListener(Event.TRIGGERED, decVol);
 
-		addChild(inc); addChild(dec);
+		addChild(inc); 
+		addChild(dec);
+		
+		inc.x = 0;
+		dec.x = dec.width;
 		play();
 	}
 
