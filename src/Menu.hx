@@ -82,15 +82,15 @@ class Menu extends Sprite
 					}
 				}
 
-				var easy = new MenuButton(75,50,"Easy",32,
+				var easy = new MenuButton(75,50,"Easy",20,
 				function(){ difficultyFunc(0);});
 				easy.y = setHeight(30);
 				
-				var medium = new MenuButton(75,50,"Medium",32,
+				var medium = new MenuButton(75,50,"Medium",20,
 				function(){ difficultyFunc(1);});
 				medium.y = setHeight(40);
 				
-				var hard = new MenuButton(75,50,"Hard",32,
+				var hard = new MenuButton(75,50,"Hard",20,
 				function(){ difficultyFunc(2);});
 				hard.y = setHeight(50);
 				
@@ -193,6 +193,7 @@ class MenuButton extends Button
 		addEventListener(Event.TRIGGERED, function()
 		{
 			fn();
+			
 		});
 	}
 }

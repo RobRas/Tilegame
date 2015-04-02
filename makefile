@@ -1,10 +1,10 @@
-FLEX_SDK=C:/flexsdk
+FLEX_SDK=~\Flex
 
 APP=tile
 APP_XML=$(APP).xml
-ADL=$(FLEX_SDK)/bin/adl.exe
+ADL=$(FLEX_SDK)/bin/adl
 AMXMLC=$(FLEX_SDK)/bin/amxmlc
-SOURCES=src/*.hx
+SOURCES=src/Startup.hx src/Root.hx
 
 all: $(APP).swf
 $(APP).swf: $(SOURCES)
@@ -15,7 +15,9 @@ $(APP).swf: $(SOURCES)
 	-swf-header 640:640:60:0 \
 	-main Startup \
 	-swf $(APP).swf \
-	-resource assets/dancefloor.tmx@dancefloor \
+	-resource assets/easy.tmx@easy \
+	-resource assets/med.tmx@med \
+	-resource assets/hard.tmx@hard \
 	-swf-lib vendor/starling.swc --macro "patchTypes('vendor/starling.patch')"
 
 clean:

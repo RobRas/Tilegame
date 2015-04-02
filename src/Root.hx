@@ -18,14 +18,17 @@ class Root extends Sprite {
 	public function start(startup:Startup) {
 		assets = new AssetManager();
 
+		//spritesheet
+		assets.enqueue("assets/sprites.png");
+		assets.enqueue("assets/sprites.xml");
+
 		//bitmap fonts
 		assets.enqueue("assets/font3.fnt");
 		assets.enqueue("assets/font3.png");
 		var fonts = new BitmapFont(assets.getTexture("font3"), assets.getXml("font3"));
 		fonts.smoothing = TextureSmoothing.NONE;
 
-
-		//assets.enqueue("assets/dancefloor.tmx");
+		//tilemap
 		assets.enqueue("assets/tile1.png");
 		assets.enqueue("assets/tile2.png");
 		assets.enqueue("assets/tile3.png");
@@ -78,6 +81,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/blue6.png");
 		assets.enqueue("assets/blue7.png");
 		assets.enqueue("assets/blue8.png");
+		
 
 		assets.enqueue("assets/TileGame.mp3");
 		assets.loadQueue(function onProgress(ratio:Float)

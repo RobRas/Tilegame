@@ -4,6 +4,7 @@ import starling.events.*;
 import starling.text.TextField;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
+import Tilemap;
 
 enum GRIDTYPE
 {
@@ -30,7 +31,7 @@ class Game extends Sprite
 		super();
 
 		size = GRID_SIZE*gridNum;
-		createGridLines();
+		//createGridLines();
 
 		grid = new Array();
 		for(i in 0...gridNum)
@@ -42,14 +43,18 @@ class Game extends Sprite
 			}
 		}
 
-		//tilemap = new Tilemap(Root.assets, "dancefloor");
-		//addChild(tilemap);
+		if (gridNum == 70) tilemap = new Tilemap(Root.assets, "easy");
+		else if (gridNum == 50) tilemap = new Tilemap(Root.assets, "med");
+		else tilemap = new Tilemap(Root.assets, "hard");
+		tilemap.flatten();
+		addChild(tilemap);
 
 		sticks = new Array();
 		addGlowsticks();
 		dancers = new Array();
 		addDancers();
 		addPlayer(cast(gridNum/2,UInt), cast(gridNum/2,UInt));
+		
 	}
 
 	public function updateScore(sc : UInt)
@@ -107,6 +112,7 @@ class Game extends Sprite
 				if(y > 0) y = 0;
 				else if(y < -(size - Starling.current.stage.stageHeight))
 					y = -(size - Starling.current.stage.stageHeight);
+
 			});
 		}
 	}
