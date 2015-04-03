@@ -45,7 +45,7 @@ class Root extends Sprite {
 		assets.enqueue("assets/tile14.png");
 		assets.enqueue("assets/tile15.png");
 
-		
+
 		//player sprites
 		assets.enqueue("assets/bandit1.png");
 		assets.enqueue("assets/bandit2.png");
@@ -53,35 +53,6 @@ class Root extends Sprite {
 		assets.enqueue("assets/bandit4.png");
 		assets.enqueue("assets/bandit5.png");
 		assets.enqueue("assets/bandit6.png");
-
-		//people sprites
-		assets.enqueue("assets/red1.png");
-		assets.enqueue("assets/red2.png");
-		assets.enqueue("assets/red3.png");
-		assets.enqueue("assets/red4.png");
-		assets.enqueue("assets/red5.png");
-		assets.enqueue("assets/red6.png");
-		assets.enqueue("assets/red7.png");
-		assets.enqueue("assets/red8.png");
-
-		assets.enqueue("assets/green1.png");
-		assets.enqueue("assets/green2.png");
-		assets.enqueue("assets/green3.png");
-		assets.enqueue("assets/green4.png");
-		assets.enqueue("assets/green5.png");
-		assets.enqueue("assets/green6.png");
-		assets.enqueue("assets/green7.png");
-		assets.enqueue("assets/green8.png");
-
-		assets.enqueue("assets/blue1.png");
-		assets.enqueue("assets/blue2.png");
-		assets.enqueue("assets/blue3.png");
-		assets.enqueue("assets/blue4.png");
-		assets.enqueue("assets/blue5.png");
-		assets.enqueue("assets/blue6.png");
-		assets.enqueue("assets/blue7.png");
-		assets.enqueue("assets/blue8.png");
-		
 
 		assets.enqueue("assets/TileGame.mp3");
 		assets.loadQueue(function onProgress(ratio:Float)

@@ -156,26 +156,26 @@ class Player extends Sprite implements GameSprite
 
 	//changes the displayed image of the sprite depending on dir
 	private function changeSprite(){
+		var next = currentImage;
 		currentImage.visible = false;
 		switch(dir){
 			case UP:
 				//if (jumping) next = jup;
 				//else
-				currentImage = up;
+				next = up;
 			case DOWN:
 				//if (jumping) next = jdown;
 				//else
-				currentImage = down;
+				next = down;
 			case LEFT:
 				//if (jumping) next = jleft;
 				//else
-				currentImage = left;
+				next = left;
 			case RIGHT:
 				//if (jumping) next = jright;
 				//else
-				currentImage = right;
-			case NONE:
-
+				next = right;
+			default:
 		}
 
 		if (next != currentImage){

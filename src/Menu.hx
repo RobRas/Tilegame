@@ -24,9 +24,7 @@ class Menu extends Sprite
 	//This is where the name of the bitmap font should be placed
 	public inline static var bitmapFont = "font3";
 
-	private inline static var creditsText = "Credits\n-------\nTemitope Alaga\n Cate Holcomb\n Justin Liddicoat";
-
-	private inline static var creditsText = "Temitope Alaga\n Cate Holcomb\n Justin Liddicoat\nRobert Rasmussen";
+	private inline static var creditsText = "Credits\n-------\nTemitope Alaga\n Cate Holcomb\n Justin Liddicoat\nRobert Rasmussen";
 
 	private static inline var instructionText = "Instructions\n------------\n"
 	+"The nefarious Rave Bandit wants to steal all the glowsticks from the rave. "
@@ -187,7 +185,7 @@ class Menu extends Sprite
 		}
 	}
 
-	public function reset(score : UInt)
+	public function reset(score : UInt, diff : UInt)
 	{
 		var newScores = new Array();
 		var i = 0;
@@ -196,8 +194,15 @@ class Menu extends Sprite
 		{
 			if(!added && score > highscores[i].score)
 			{
-				newestScore = new Highscore(score,"");
+				newestScore = new Highscore(score,
+				switch(diff)
+				{
+					case 0: Hard;
+					case 1: Medium;
+					default: Easy;
+				},"");
 				newScores.push(newestScore);
+				++i;
 				added = true;
 			}
 			else

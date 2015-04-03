@@ -210,7 +210,15 @@ class Game extends Sprite
 	}
 
 	public function reset(score : UInt)
-	{	cast(parent, Menu).reset(score);}
+	{	cast(parent, Menu).reset(score, getDif());}
+
+	private function getDif() : UInt
+	{
+		var gridNum = size/GRID_SIZE;
+		if(gridNum >= 70) return 0;
+		else if(gridNum >= 50) return 1;
+		else return 2;
+	}
 }
 
 interface GameSprite
