@@ -52,7 +52,7 @@ class Game extends Sprite
 	public function updateScore(sc : UInt)
 	{	scoreText.setText(Std.string(sc));}
 
-	private function createGridLines()
+	/*private function createGridLines()
 	{
 		//horizontal lines
 		var i : UInt = 0;
@@ -71,7 +71,7 @@ class Game extends Sprite
 			quad.x = j; j += GRID_SIZE;
 			addChild(quad);
 		}
-	}
+	}*/
 
 	private function addPlayer(gridX : UInt, gridY : UInt)
 	{
@@ -86,6 +86,8 @@ class Game extends Sprite
 		//only if the grid so big that it can't fit on screen
 		if(size/Game.GRID_SIZE > 20)
 		{
+			/*var totalTime : Float = 0;
+			var frameCount = 0;*/
 			addEventListener(Event.ENTER_FRAME, function(e:EnterFrameEvent)
 			{
 				//center positions of player
@@ -104,6 +106,14 @@ class Game extends Sprite
 				if(y > 0) y = 0;
 				else if(y < -(size - Starling.current.stage.stageHeight))
 					y = -(size - Starling.current.stage.stageHeight);
+
+				//checking the frame rate
+				/*totalTime += e.passedTime;
+				if(++frameCount % 60 == 0)
+				{
+					trace("Frame Rate: " + frameCount/totalTime);
+					frameCount = 0; totalTime = 0;
+				}*/
 			});
 		}
 	}
@@ -199,8 +209,8 @@ class Game extends Sprite
 				gridY >= 0 && gridY <= grid[0].length - 1;
 	}
 
-	public function reset()
-	{	cast(parent, Menu).reset();}
+	public function reset(score : UInt)
+	{	cast(parent, Menu).reset(score);}
 }
 
 interface GameSprite

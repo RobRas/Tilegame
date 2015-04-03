@@ -19,13 +19,13 @@ enum DIRECTION
 class Player extends Sprite implements GameSprite
 {
 	//the 8 player direcetion images
-	private var up:Image; 
-	private var down:Image; 
-	private var right:Image; 
-	private var left:Image; 
-	private var jup:Image; 
-	private var jdown:Image; 
-	private var jright:Image; 
+	private var up:Image;
+	private var down:Image;
+	private var right:Image;
+	private var left:Image;
+	private var jup:Image;
+	private var jdown:Image;
+	private var jright:Image;
 	private var jleft:Image;
 	private var currentImage : Image;
 
@@ -132,8 +132,6 @@ class Player extends Sprite implements GameSprite
 		addChild(jright);
 		addChild(jleft);
 		currentImage = down;
-
-
 	}
 
 	private function checkDirection(dirX : Int, dirY : Int)
@@ -156,11 +154,11 @@ class Player extends Sprite implements GameSprite
 
 					moveTo(nx,ny);
 				default:
-					game.reset();
+					game.reset(score);
 			}
 		}
 		else
-		{	game.reset();}
+		{	game.reset(score);}
 	}
 
 	//changes the displayed image of the sprite depending on dir
@@ -187,7 +185,7 @@ class Player extends Sprite implements GameSprite
 			currentImage.visible = false;
 			currentImage = next;
 			next.visible = true;
-			} 
+			}
 	}
 
 	private function moveTo(nx : Int, ny : Int)
