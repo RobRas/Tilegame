@@ -7,6 +7,7 @@ import flash.utils.Timer;
 import Tilemap;
 import GameObstacles;
 
+
 enum GRIDTYPE
 {
 	EMPTY;
@@ -25,14 +26,13 @@ class Game extends Sprite
 	private var size : UInt;
 	private var scoreText : ScoreText;
 	public var wallcount : UInt = 1;
-	private var tilemap : Tilemap;
 
 	public function new(gridNum : UInt)
 	{
 		super();
 
 		size = GRID_SIZE*gridNum;
-		//createGridLines();
+		addChild(new Tilemap(gridNum));
 
 		grid = new Array();
 		for(i in 0...gridNum)
@@ -44,18 +44,11 @@ class Game extends Sprite
 			}
 		}
 
-		if (gridNum == 70) tilemap = new Tilemap(Root.assets, "easy");
-		else if (gridNum == 50) tilemap = new Tilemap(Root.assets, "med");
-		else tilemap = new Tilemap(Root.assets, "hard");
-		tilemap.flatten();
-		addChild(tilemap);
-
 		sticks = new Array();
 		addGlowsticks();
 		dancers = new Array();
 		addDancers();
 		addPlayer(cast(gridNum/2,UInt), cast(gridNum/2,UInt));
-		
 	}
 
 	public function updateScore(sc : UInt)
@@ -75,7 +68,7 @@ class Game extends Sprite
 		//only if the grid so big that it can't fit on screen
 		if(size/Game.GRID_SIZE > 20)
 		{
-			addEventListener(Event.ENTER_FRAME, function()
+			addEventListener(Event.ENTER_FRAME, function(e:EnterFrameEvent)
 			{
 				//center positions of player
 				var centerX = p.x + Game.GRID_SIZE/2;
@@ -93,7 +86,6 @@ class Game extends Sprite
 				if(y > 0) y = 0;
 				else if(y < -(size - Starling.current.stage.stageHeight))
 					y = -(size - Starling.current.stage.stageHeight);
-
 			});
 		}
 	}
@@ -191,5 +183,24 @@ class Game extends Sprite
 
 	public function reset()
 	{	cast(parent, Menu).reset();}
+}
+
+
+class Tilemap extends Sprite
+{
+	public function new(num : UInt)
+	{
+		super();
+		for(i in 0...num)
+		{
+			for(j in 0...num)
+			{
+				var im = new Image(Root.assets.getTexture("tile" + (Std.random(13)+1)));
+				im.x = i * Game.GRID_SIZE; im.y = j * Game.GRID_SIZE;
+				addChild(im);
+			}
+		}
+		addEventListener(Event.ADDED, flatten);
+	}
 }
 

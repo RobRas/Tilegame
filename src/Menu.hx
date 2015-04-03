@@ -21,7 +21,9 @@ class Menu extends Sprite
 	//This is where the name of the bitmap font should be placed
 	public inline static var bitmapFont = "font3";
 
+
 	private inline static var creditsText = "Temitope Alaga\n Cate Holcomb\n Justin Liddicoat\nRobert Rasmussen";
+
 
 	private static inline var instructionText = "The nefarious Rave Bandit wants to steal all the glowsticks from the rave. "
 	+"Navigate the dance floor with the arrow keys, and avoid the dancers, walls, and your light trail.";
@@ -68,40 +70,27 @@ class Menu extends Sprite
 				title.y = setHeight(15);
 				addChild(title);
 
-				var num:UInt;
-				var difficultyFunc = function(i:UInt)
+				var easy = new MenuButton(75,50,"Easy",20,function()
 				{
-					if(i == 0){
-						num = 70;
-					}
-					else if(i == 1){
-						num = 50;
-					}
-					else{
-						num = 30;
-					}
-				}
-
-				var easy = new MenuButton(75,50,"Easy",20,
-				function(){ difficultyFunc(0);});
+					setMenu(Play,30);
+				});
 				easy.y = setHeight(30);
-				
-				var medium = new MenuButton(75,50,"Medium",20,
-				function(){ difficultyFunc(1);});
+
+				var medium = new MenuButton(75,50,"Medium",20,function()
+				{
+					setMenu(Play,50);
+				});
 				medium.y = setHeight(40);
-				
-				var hard = new MenuButton(75,50,"Hard",20,
-				function(){ difficultyFunc(2);});
+
+				var hard = new MenuButton(75,50,"Hard",20,function()
+				{
+					setMenu(Play,70);
+				});
 				hard.y = setHeight(50);
-				
-				addChild(easy); 
+
+				addChild(easy);
 				addChild(medium);
 				addChild(hard);
-
-				var play = new MenuButton(100,100,"Start",20,
-				function(){ setMenu(Play,num);});
-				play.y = setHeight(85);
-				addChild(play);
 
 			case Instructions:
 				var instr = new MenuText(300,300,instructionText,20);
@@ -190,11 +179,7 @@ class MenuButton extends Button
 		{
 			x = Starling.current.stage.stageWidth/2 - w/2;
 		});
-		addEventListener(Event.TRIGGERED, function()
-		{
-			fn();
-			
-		});
+		addEventListener(Event.TRIGGERED, fn);
 	}
 }
 
@@ -204,8 +189,6 @@ class GameMusic extends Sprite
 	private var channel : SoundChannel;
 	private var volume : Float;
 	private var isPlaying : Bool;
-	private var inc : Button;
-	private var dec : Button;
 
 	public function new()
 	{
@@ -214,24 +197,23 @@ class GameMusic extends Sprite
 		channel = null;
 		isPlaying = false;
 		volume = 0.5;
-		
-		inc = new MenuButton(50, 50, "+", 20, incVol);
-		inc.y = Starling.current.stage.stageHeight - inc.height;
+
+		var dec = new Button(Texture.empty(50,50), "-");
+		dec.fontName = Menu.bitmapFont;
+		dec.fontColor = 0xffffff;
+		dec.fontSize = 20;
+		dec.addEventListener(Event.TRIGGERED, decVol);
+
+		var inc = new Button(Texture.empty(50,50),"+");
+		inc.x = inc.width;
+		inc.fontColor = 0xffffff;
 		inc.fontName = Menu.bitmapFont;
 		inc.fontSize = 20;
 		inc.addEventListener(Event.TRIGGERED, incVol);
 
-		dec = new MenuButton(50, 50, "-", 20, decVol);
-		dec.y = inc.y;
-		dec.fontName = Menu.bitmapFont;
-		dec.fontSize = 20;
-		dec.addEventListener(Event.TRIGGERED, decVol);
-
-		addChild(inc); 
+		addChild(inc);
 		addChild(dec);
-		
-		inc.x = 0;
-		dec.x = dec.width;
+
 		play();
 	}
 
@@ -276,4 +258,4 @@ class GameMusic extends Sprite
 		if(volume < 0.0) volume = 0.0;
 		channel.soundTransform = new SoundTransform(volume);
 	}
-}
+
