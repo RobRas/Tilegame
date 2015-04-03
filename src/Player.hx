@@ -94,25 +94,28 @@ class Player extends Sprite implements GameSprite
 			}
 		});
 
-		var textures = Root.assets.getTextures("bandit");
-
-		up = new Image(textures[4]);
-		down = new Image(textures[0]);
-		right = new Image(textures[2]);
-		left = new Image(textures[6]);
-		jup = new Image(textures[5]);
-		jdown = new Image(textures[1]);
-		jright = new Image(textures[3]);
-		jleft = new Image(textures[7]);
+		up = new Image(Root.assets.getTexture("bandit5"));
+		down = new Image(Root.assets.getTexture("bandit1"));
+		right = new Image(Root.assets.getTexture("bandit3"));
+		left = new Image(Root.assets.getTexture("bandit3"));
+		jup = new Image(Root.assets.getTexture("bandit6"));
+		jdown = new Image(Root.assets.getTexture("bandit2"));
+		jright = new Image(Root.assets.getTexture("bandit4"));
+		jleft = new Image(Root.assets.getTexture("bandit4"));
 
 		//format the player images for the begining of the game
 		up.visible = false;
 		right.visible = false;
 		left.visible = false;
+		left.scaleX = -1;
+		left.x = left.x + left.width;
 		jup.visible = false;
 		jdown.visible = false;
 		jright.visible = false;
 		jleft.visible = false;
+		jleft.scaleX = -1;
+		jleft.x = jleft.x + jleft.width;
+
 
 		addChild(up);
 		addChild(down);
