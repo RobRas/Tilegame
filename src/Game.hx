@@ -4,7 +4,6 @@ import starling.events.*;
 import starling.text.TextField;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
-import Tilemap;
 import GameObstacles;
 
 

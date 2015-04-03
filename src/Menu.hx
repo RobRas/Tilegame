@@ -258,4 +258,4 @@ class GameMusic extends Sprite
 		if(volume < 0.0) volume = 0.0;
 		channel.soundTransform = new SoundTransform(volume);
 	}
-
+}
