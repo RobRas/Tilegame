@@ -142,9 +142,10 @@ class Game extends Sprite
 
 	private function createDancer(gridX : UInt, gridY : UInt){
 		grid[gridX][gridY] = DANCER;
-		var d = new Dancer(Std.random(3),Std.random(20) + 1);
+		var d = new Dancer(Std.random(3),Std.random(6) + 1);
 		d.x = gridX * Game.GRID_SIZE;
 		d.y = gridY * Game.GRID_SIZE;
+		d.advanceTime(Std.random(10)/10);
 		dancers.push(d);
 		addChild(d);
 	}
