@@ -75,15 +75,7 @@ class Player extends Sprite implements GameSprite
 					jumping = !jumping;
 			}
 		});
-		addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent)
-		{
-			switch(e.keyCode)
-			{
-				case Keyboard.SPACE:
-					jumping = !jumping;
-			}
-			changeSprite();
-		});
+
 		addEventListener(Event.ENTER_FRAME, function()
 		{
 			if(moving) return;
@@ -122,6 +114,7 @@ class Player extends Sprite implements GameSprite
 		jleft.visible = false;
 		jleft.scaleX = -1;
 		jleft.x = jleft.x + jleft.width;
+
 
 		addChild(up);
 		addChild(down);
@@ -163,20 +156,24 @@ class Player extends Sprite implements GameSprite
 
 	//changes the displayed image of the sprite depending on dir
 	private function changeSprite(){
-		var next: Image = currentImage;
+		currentImage.visible = false;
 		switch(dir){
 			case UP:
-				if (jumping) next = jup;
-				else next = up;
+				//if (jumping) next = jup;
+				//else
+				currentImage = up;
 			case DOWN:
-				if (jumping) next = jdown;
-				else next = down;
+				//if (jumping) next = jdown;
+				//else
+				currentImage = down;
 			case LEFT:
-				if (jumping) next = jleft;
-				else next = left;
+				//if (jumping) next = jleft;
+				//else
+				currentImage = left;
 			case RIGHT:
-				if (jumping) next = jright;
-				else next = right;
+				//if (jumping) next = jright;
+				//else
+				currentImage = right;
 			case NONE:
 
 		}
@@ -186,6 +183,7 @@ class Player extends Sprite implements GameSprite
 			currentImage = next;
 			next.visible = true;
 			}
+		currentImage.visible = true;
 	}
 
 	private function moveTo(nx : Int, ny : Int)

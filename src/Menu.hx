@@ -26,7 +26,10 @@ class Menu extends Sprite
 
 	private inline static var creditsText = "Credits\n-------\nTemitope Alaga\n Cate Holcomb\n Justin Liddicoat";
 
-	private static inline var instructionText = "The nefarious Rave Bandit wants to steal all the glowsticks from the rave. "
+	private inline static var creditsText = "Temitope Alaga\n Cate Holcomb\n Justin Liddicoat\nRobert Rasmussen";
+
+	private static inline var instructionText = "Instructions\n------------\n"
+	+"The nefarious Rave Bandit wants to steal all the glowsticks from the rave. "
 	+"Navigate the dance floor with the arrow keys, and avoid the dancers, walls, and your light trail.";
 
 	//highscores
