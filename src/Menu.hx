@@ -21,7 +21,7 @@ class Menu extends Sprite
 	//This is where the name of the bitmap font should be placed
 	public inline static var bitmapFont = "font3";
 
-	private inline static var creditsText = "Temitope Alaga\n Cate Holcomb\n Justin Liddicoat\nAdd others' name later...";
+	private inline static var creditsText = "Temitope Alaga\n Cate Holcomb\n Justin Liddicoat\nRobert Rasmussen";
 
 	private static inline var instructionText = "The nefarious Rave Bandit wants to steal all the glowsticks from the rave. "
 	+"Navigate the dance floor with the arrow keys, and avoid the dancers, walls, and your light trail.";
@@ -275,50 +275,5 @@ class GameMusic extends Sprite
 		volume -= 0.1;
 		if(volume < 0.0) volume = 0.0;
 		channel.soundTransform = new SoundTransform(volume);
-	}
-}
-
-
-
-class Background extends Sprite
-{
-	private inline static var SIZE = 128;
-	private var tweening : Array<Bool>;
-	private var time : Float;
-
-	public function new()
-	{
-		super();
-
-		tweening = new Array();
-		var i = 0;
-		while(i < Starling.current.stage.stageWidth)
-		{
-			var j = 0;
-			while(j < Starling.current.stage.stageHeight)
-			{
-				var q = new Quad(SIZE,SIZE,Std.random(0xaaaaaa)+0x222222);
-				q.x = i;
-				q.y = j;
-				addChild(q);
-				tweening.push(false);
-				j += SIZE;
-			}
-			i += SIZE;
-		}
-
-		time = 0;
-		addEventListener(Event.ENTER_FRAME, move);
-	}
-
-	private function move(e:EnterFrameEvent)
-	{
-		time += e.passedTime;
-		if(time > 2)
-		{
-			time = 0;
-			for(i in 0...numChildren-1)
-				cast(getChildAt(i),Quad).color = Std.random(0xaaaaaa)+0x222222;
-		}
 	}
 }

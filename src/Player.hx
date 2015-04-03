@@ -6,6 +6,7 @@ import starling.events.*;
 import flash.ui.*;
 import Menu;
 import Game;
+import GameObstacles;
 
 enum DIRECTION
 {
@@ -75,15 +76,7 @@ class Player extends Sprite implements GameSprite
 					jumping = !jumping;
 			}
 		});
-		addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent)
-		{
-			switch(e.keyCode)
-			{
-				case Keyboard.SPACE:
-					jumping = !jumping;
-			}
-			changeSprite();
-		});
+
 		addEventListener(Event.ENTER_FRAME, function()
 		{
 			if(moving) return;
@@ -101,27 +94,25 @@ class Player extends Sprite implements GameSprite
 			}
 		});
 
-		up = new Image(Root.assets.getTexture("bandit5"));
-		down = new Image(Root.assets.getTexture("bandit1"));
-		right = new Image(Root.assets.getTexture("bandit3"));
-		left = new Image(Root.assets.getTexture("bandit3"));
-		jup = new Image(Root.assets.getTexture("bandit6"));
-		jdown = new Image(Root.assets.getTexture("bandit2"));
-		jright = new Image(Root.assets.getTexture("bandit4"));
-		jleft = new Image(Root.assets.getTexture("bandit4"));
+		var textures = Root.assets.getTextures("bandit");
+
+		up = new Image(textures[4]);
+		down = new Image(textures[0]);
+		right = new Image(textures[2]);
+		left = new Image(textures[6]);
+		jup = new Image(textures[5]);
+		jdown = new Image(textures[1]);
+		jright = new Image(textures[3]);
+		jleft = new Image(textures[7]);
 
 		//format the player images for the begining of the game
 		up.visible = false;
 		right.visible = false;
 		left.visible = false;
-		left.scaleX = -1;
-		left.x = left.x + left.width;
 		jup.visible = false;
 		jdown.visible = false;
 		jright.visible = false;
 		jleft.visible = false;
-		jleft.scaleX = -1;
-		jleft.x = jleft.x + jleft.width;
 
 		addChild(up);
 		addChild(down);
@@ -165,29 +156,29 @@ class Player extends Sprite implements GameSprite
 
 	//changes the displayed image of the sprite depending on dir
 	private function changeSprite(){
-		var next: Image = currentImage;
+		currentImage.visible = false;
 		switch(dir){
 			case UP:
-				if (jumping) next = jup;
-				else next = up;
+				//if (jumping) next = jup;
+				//else 
+				currentImage = up;
 			case DOWN:
-				if (jumping) next = jdown;
-				else next = down;
+				//if (jumping) next = jdown;
+				//else 
+				currentImage = down;
 			case LEFT:
-				if (jumping) next = jleft;
-				else next = left;
+				//if (jumping) next = jleft;
+				//else 
+				currentImage = left;
 			case RIGHT:
-				if (jumping) next = jright;
-				else next = right;
+				//if (jumping) next = jright;
+				//else 
+				currentImage = right;
 			case NONE:
 
 		}
 
-		if (next != currentImage){
-			currentImage.visible = false;
-			currentImage = next;
-			next.visible = true;
-			} 
+		currentImage.visible = true;
 	}
 
 	private function moveTo(nx : Int, ny : Int)

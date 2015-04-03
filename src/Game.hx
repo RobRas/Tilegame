@@ -5,6 +5,7 @@ import starling.text.TextField;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
 import Tilemap;
+import GameObstacles;
 
 enum GRIDTYPE
 {
@@ -60,26 +61,6 @@ class Game extends Sprite
 	public function updateScore(sc : UInt)
 	{	scoreText.setText(Std.string(sc));}
 
-	private function createGridLines()
-	{
-		//horizontal lines
-		var i : UInt = 0;
-		while(i <= size)
-		{
-			var quad = new Quad(size, 2.5, 0);
-			quad.y = i; i += GRID_SIZE;
-			addChild(quad);
-		}
-
-		//vertical lines
-		var j : UInt = 0;
-		while(j <= size)
-		{
-			var quad = new Quad(2.5, size, 0);
-			quad.x = j; j += GRID_SIZE;
-			addChild(quad);
-		}
-	}
 
 	private function addPlayer(gridX : UInt, gridY : UInt)
 	{
@@ -170,7 +151,7 @@ class Game extends Sprite
 
 	private function createDancer(gridX : UInt, gridY : UInt){
 		grid[gridX][gridY] = DANCER;
-		var d = new Dancer(Std.random(3));
+		var d = new Dancer(Std.random(3),Std.random(12));
 		d.x = gridX * Game.GRID_SIZE;
 		d.y = gridY * Game.GRID_SIZE;
 		dancers.push(d);
@@ -212,94 +193,3 @@ class Game extends Sprite
 	{	cast(parent, Menu).reset();}
 }
 
-interface GameSprite
-{
-	public function getX() : UInt;
-	public function getY() : UInt;
-}
-
-class Wall extends Sprite implements GameSprite
-{
-	public function new(gridX : UInt, gridY : UInt, col : UInt)
-	{
-		super();
-		x = gridX * Game.GRID_SIZE;
-		y = gridY * Game.GRID_SIZE;
-
-		var q = new Quad(Game.GRID_SIZE, Game.GRID_SIZE, col);
-		addChild(q);
-
-		addEventListener(Event.ADDED, function()
-		{
-			var timer = new Timer(100, Math.ceil(cast(parent, Game).wallcount++/2));
-			timer.start();
-			timer.addEventListener(TimerEvent.TIMER_COMPLETE, function(e:TimerEvent)
-			{
-				cast(parent, Game).removeWall(this);
-			});
-		});
-	}
-
-	public function getX() : UInt
-	{	return cast(Std.int(x / Game.GRID_SIZE), UInt);}
-
-	public function getY() : UInt
-	{	return cast(Std.int(y / Game.GRID_SIZE), UInt);}
-}
-
-class Glowstick extends Sprite implements GameSprite
-{
-	var quad : Quad;
-
-	public function new(gridX : UInt, gridY : UInt)
-	{
-		super();
-
-		x = gridX * Game.GRID_SIZE;
-		y = gridY * Game.GRID_SIZE;
-
-		quad = new Quad(Game.GRID_SIZE / 4, Game.GRID_SIZE);
-		do{quad.color = Std.random(0xcccccc);}
-		while(quad.color < 0x606060);
-		addChild(quad);
-		quad.x = quad.y = Game.GRID_SIZE/2;
-		quad.pivotX = quad.width/2;
-		quad.pivotY = quad.height/2;
-		quad.alpha = 0.75;
-
-		var rotFac = Std.random(10)+1;
-
-		addEventListener(Event.ENTER_FRAME, function()
-		{
-			quad.rotation += (rotFac*Math.PI/180);
-		});
-	}
-
-	public function getColor() : UInt
-	{	return quad.color;}
-
-	public function getX() : UInt
-	{	return cast(Std.int(x / Game.GRID_SIZE), UInt);}
-
-		public function getY() : UInt
-	{	return cast(Std.int(y / Game.GRID_SIZE), UInt);}
-}
-
-class ScoreText extends Sprite
-{
-	private var quad : Quad;
-	private var score : TextField;
-
-	public function new()
-	{
-		super();
-		score = new TextField(Game.GRID_SIZE*3,Game.GRID_SIZE,"0",
-							Menu.bitmapFont,20,0xffffff);
-		quad = new Quad(score.width,score.height,0);
-		addChild(quad);
-		addChild(score);
-	}
-
-	public function setText(s:String)
-	{	score.text = s;}
-}
